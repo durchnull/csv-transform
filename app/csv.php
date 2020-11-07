@@ -38,21 +38,19 @@ class CSVTransformer
         'Category'
     ];
 
-    public function __construct(Job $job)
+    public function __construct(string $filename, array $actions = [])
     {
         // @todo Determine delimiter based on file
-        if (strpos($job->getFilename(), 'harvest') !== false) {
+        if (strpos($filename, 'harvest') !== false) {
             $this->delimiter = ',';
         }
 
-        $this->setFilename($job->getFilename());
-        $this->setActions($job->getActions());
+        $this->setFilename($filename);
+        $this->setActions($actions);
         $this->readFile();
         $this->executeActions();
         $this->setAmountIndex();
         $this->storeFiles();
-
-        $job->complete();
     }
 
     public function setFilename(string $filename)
@@ -308,6 +306,10 @@ class CSVTransformer
 
     private function save(array $data, string $filename, $delimiter)
     {
+        if (count($data) <= 1) {
+            return;
+        }
+
         $filename = __DIR__ . "/{$this->outputDirectory}/{$filename}";
 
         if (($handle = fopen($filename, 'w')) !== FALSE) {

@@ -14,22 +14,39 @@ class Job
 
     public function getTitle(): string
     {
-        return $this->getFilename();
+        return $this->instructions['filename'];
     }
 
-    public function getFilename(): string
+    public function getFiles(): array
     {
-        return $this->instructions['filename'];
+        $files = [];
+
+        $filename = $this->instructions['filename'];
+
+        if (strpos($filename, '*')) {
+            $inputDirectory = new \DirectoryIterator(dirname(__FILE__) . "/../storage/input");
+
+            foreach ($inputDirectory as $fileinfo) {
+                if (! $fileinfo->isDot() &&
+                    ! $fileinfo->isDir() &&
+                    $fileinfo->getExtension() == 'csv'
+                ) {
+                    if (strpos($fileinfo->getFilename(), str_replace('*', '', $filename)) !== false) {
+                        $files[] = $fileinfo->getFilename();
+                    }
+                }
+            }
+        }
+        else {
+            $files[] = $filename;
+        }
+
+        return $files;
     }
 
     public function getActions(): array
     {
         return $this->instructions['actions'];
-    }
-
-    public function complete(): void
-    {
-        info("Job complete \n");
     }
 
     // @todo

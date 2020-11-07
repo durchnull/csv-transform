@@ -21,12 +21,8 @@ class App
                 $fileinfo->getFilename() !== 'example_job.php' &&
                 $fileinfo->getExtension() == 'php'
             ) {
-                $file = $fileinfo->getPath() . '/' . $fileinfo->getFilename();
-                $job = include $fileinfo->getPath() . '/' . $fileinfo->getFilename();
-
-                // @todo set job filename by fileinfo path if filename is not set
-
-                $this->jobs[] =  new Job($job);
+                $instructions = include $fileinfo->getPath() . '/' . $fileinfo->getFilename();
+                $this->jobs[] = new Job($instructions);
             }
         }
     }
@@ -34,8 +30,15 @@ class App
     public function run()
     {
         foreach ($this->jobs as $index => $job) {
-            info('Job ' . $job->getTitle());
-            new CSVTransformer($job);
+            $files = $job->getFiles();
+            info('Job: ' . $job->getTitle());
+
+            foreach ($files as $file) {
+                info('File: ' . $file);
+                new CSVTransformer($file, $job->getActions());
+            }
+
+            info('');
         }
     }
 }
