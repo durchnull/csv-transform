@@ -1,4 +1,7 @@
 /jobs/*.php
 /jobs/actions/*/*.php
+!/jobs/example_job.php
+!/jobs/actions/AddColumns/example.php
+
 /storage/input/*
 /storage/output/*
