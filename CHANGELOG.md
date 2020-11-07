@@ -9,6 +9,10 @@ This project does adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add csv input example
 
+## [1.0.1] - 2020-11-07
+### Fixed
+- Fix exluding of example job
+
 ## [1.0.0] - 2020-11-07
 ### Added
 - Add initial application logic to restructure your csv files and add dynamic columns
