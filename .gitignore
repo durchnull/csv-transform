@@ -1,3 +1,4 @@
 /jobs/*.php
 /jobs/actions/*/*.php
-/storage
+/storage/input/*
+/storage/output/*
