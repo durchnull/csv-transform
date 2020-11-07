@@ -9,7 +9,7 @@ use App\Job;
 
 class App
 {
-    private $jobs;
+    private $jobs = [];
 
     public function __construct()
     {
@@ -18,7 +18,7 @@ class App
         foreach ($jobsDirectory as $fileinfo) {
             if (! $fileinfo->isDot() &&
                 ! $fileinfo->isDir() &&
-                ! $fileinfo->getFilename() !== 'example_job.php' &&
+                $fileinfo->getFilename() !== 'example_job.php' &&
                 $fileinfo->getExtension() == 'php'
             ) {
                 $file = $fileinfo->getPath() . '/' . $fileinfo->getFilename();
