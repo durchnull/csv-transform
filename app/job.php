@@ -41,7 +41,9 @@ class Job
             $files[] = $filename;
         }
 
-        return $files;
+        return array_filter($files, function ($file) {
+            return file_exists(dirname(__FILE__) . "/../storage/input/" . $file);
+        });
     }
 
     public function getActions(): array
