@@ -13,6 +13,11 @@ class App
 
     public function __construct()
     {
+        $this->createJobs();
+    }
+
+    private function createJobs()
+    {
         $jobsDirectory = new DirectoryIterator(dirname(__FILE__) . "/../jobs");
 
         foreach ($jobsDirectory as $fileinfo) {
